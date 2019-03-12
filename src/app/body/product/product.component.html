@@ -1,0 +1,183 @@
+<main class="app-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+          <i class="fa fa-plus"></i> Add ProDuct
+        </button>
+        <hr>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>NO</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Catagoly</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dataProduct">
+                <td>1</td>
+                <td>
+                  <img class="card-img-top img-product" src="{{item.imgName}}">
+                </td>
+                <td>{{ item.proName }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.price | currency:'CNY':'symbol-narrow' }}</td>
+                <td>
+                  <ul class="list-inline">
+                    <li class="list-inline-item">
+                      <button class="btn btn-info fa fa-edit" (click)="onEditData(item)" data-toggle="modal"
+                        data-target="#exampleModalLong2"></button>
+                    </li>
+                    <li class="list-inline-item">
+                      <button class="btn btn-danger fa fa-trash-o" (click)="onDeleteData(item._id)"></button>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal1 -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title " id="exampleModalLongTitle">Save Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- form Save -->
+          <div class="tile-body">
+            <form class="form-horizontal" (ngSubmit)="onSubmit(formValue)" #formValue="ngForm">
+              <div class="form-group row">
+                <label class="control-label col-md-3">Product Name</label>
+                <div class="col-md-8">
+                  <input class="form-control" type="text" placeholder="Enter name" ngModel name="proName">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3">Categoly</label>
+                <div class="col-md-8">
+                  <select class="form-control" id="exampleSelect1" [(ngModel)]="catname" name="catName">
+                    <option>Breakfast</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                    <option>Drink</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3">price</label>
+                <div class="col-md-8">
+                  <input class="form-control col-md-8" type="number" placeholder="price" ngModel name="price">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3">image</label>
+                <div class="col-md-8">
+                  <input class="form-control" (change)="onUpload($event)" ngModel name="image" type="file" accept="image/x-png,image/jpeg">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8 col-md-offset-3">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-fw fa-lg fa-check-circle"></i>
+                    Save
+                  </button>&nbsp;&nbsp;&nbsp;
+                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              <div *ngIf="txtShowStatus">
+                <strong>{{txtShowStatus}}</strong>
+              </div>
+            </form>
+          </div>
+          <!-- end form -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal2 -->
+  <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title " id="exampleModalLongTitle">Edit Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- form Edit -->
+          <div class="tile-body">
+            <form class="form-horizontal" (ngSubmit)="onSubmitEdit(formValueEdit)" #formValueEdit="ngForm">
+              <div class="form-group row" *ngIf="mEdit._id">
+                <label class="control-label col-md-3"> ID_Product:</label>
+                <label class="control-label col-md-3"> {{ mEdit._id }}</label>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3">Product Name</label>
+                <div class="col-md-8">
+                  <input class="form-control" type="text" placeholder="Enter name" [(ngModel)]="mEdit.proNameEdit" name="proNameEdit">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3">Categoly</label>
+                <div class="col-md-8">
+                  <select class="form-control" id="exampleSelect1" [(ngModel)]="mEdit.categoryEdit" name="categoryEdit">
+                    <option>Breakfast</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                    <option>Drink</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3">price</label>
+                <div class="col-md-8">
+                  <input class="form-control col-md-8" type="number" placeholder="price" [(ngModel)]="mEdit.priceEdit"
+                    name="priceEdit">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3">image</label>
+                <div class="col-md-8">
+                  <input class="form-control" (change)="onUpload($event)" ngModel name="imageEdit" type="file" accept="image/x-png,image/jpeg">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8 col-md-offset-3">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-fw fa-lg fa-check-circle"></i>
+                    Edit
+                  </button>&nbsp;&nbsp;&nbsp;
+                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              <div *ngIf="txtShowStatus">
+                <strong>{{txtShowStatus}}</strong>
+              </div>
+            </form>
+          </div>
+          <!-- end form -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
