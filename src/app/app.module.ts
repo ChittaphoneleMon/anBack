@@ -6,10 +6,14 @@ import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { MenuComponent } from './menu/menu.component';
+import { HeaderComponent } from './body/header/header.component';
+import { MenuComponent } from './body/menu/menu.component';
 import { BodyComponent } from './body/body.component';
 import { ProductComponent } from './body/product/product.component';
+import { LoginComponent } from './login/login.component';
+import { ShareServiceService } from './shared/share-service.service';
+import { AuthGuard } from './auth/auth.guard';
+import { OrderUserComponent } from './body/order-user/order-user.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "bgsColor": "red",
@@ -45,7 +49,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HeaderComponent,
     MenuComponent,
     BodyComponent,
-    ProductComponent
+    ProductComponent,
+    LoginComponent,
+    OrderUserComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +60,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HttpClientModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
-  providers: [],
+  providers: [ShareServiceService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
