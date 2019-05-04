@@ -1,3 +1,32 @@
-<p>
-  order-user works!
-</p>
+<main class="app-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">NO</th>
+                <th scope="col">Billnumber</th>
+                <th scope="col">CustomerName</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dataMyorder; let i = index">
+                <th>{{ i + 1 }}</th>
+                <td>{{ item.billnumber }}</td>
+                <td>{{ item.customer }}</td>
+                <td>{{ item.price | currency: "CNY":"symbol-narrow" }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.createdAt | date: "dd/MM/yyyy hh:mm:ss a" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

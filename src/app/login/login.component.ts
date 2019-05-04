@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { NgxUiLoaderService } from "ngx-ui-loader";
 import { ShareServiceService } from "../shared/share-service.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-login",
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   onLoginSubmit(form: NgForm) {
     this.ngxService.start();
-    this.http.post("http://localhost:3000/users/signin", form.value).subscribe(
+    this.http.post(environment.apiBaseUrl + "/users/signin", form.value).subscribe(
       (res: any) => {
         this.ngxService.stop();
         if (res["resCode"] === 200) {

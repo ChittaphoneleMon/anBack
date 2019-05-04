@@ -4,6 +4,7 @@ import { ProductComponent } from "./body/product/product.component";
 import { LoginComponent } from "./login/login.component";
 import { BodyComponent } from "./body/body.component";
 import { AuthGuard } from "./auth/auth.guard";
+import { OrderUserComponent } from './body/order-user/order-user.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,17 @@ const routes: Routes = [
       {
         path: "product",
         component: ProductComponent,
+        canActivate: [AuthGuard]
+      }
+    ]
+  },
+  {
+    path: "",
+    component: BodyComponent,
+    children: [
+      {
+        path: "order",
+        component: OrderUserComponent,
         canActivate: [AuthGuard]
       }
     ]
